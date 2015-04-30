@@ -1,15 +1,17 @@
 # Rubinius::RailsLogger
 
 Logging is essential to monitoring and debugging an application. However,
-logging infrastructure is often limited. For example, the libc syslog()
+logging infrastructure is often limited. For example, the libc `syslog()`
 facility can only be opened once in a process. This prevents Rubinius from
-using syslog independently of the appliation running on Rubinius. Furthermore,
-configuring a process for logging is a operations-level concern, not an
-application concern.
+using syslog independently of the appliation running on Rubinius.
+Additionally, concurrent access to the `syslog()` needs to be synchronized.
+Finally, configuring a process for logging is a operations-level concern, not
+an application concern.
 
 Rubinius includes a logging facility that Rubinius uses internally. An API for
 the facility is exposed to Ruby code. The logger can be configured to use
-syslog(), as well as STDOUT, STDERR or a file.
+`syslog()`, as well as STDOUT, STDERR or a file. Support for newer logging
+facilities like syslog-ng is planned.
 
 The Rubinius::RailsLogger gem provides an adapter for Rails logging that uses
 the built-in Rubinius logging facility. Some operations are no-ops (eg
@@ -33,13 +35,27 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Set Rails to use the logger:
+
+    # config/environments/production.rb
+    config.logger = Rubinius::RailsLogger.new "app-name"
+
+Use the same logging API you would expect with, for example, SyslogLogger.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then,
+run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
+To release a new version, update the version number in `version.rb`, and then
+run `bundle exec rake release` to create a git tag for the version, push git
+commits and tags, and push the `.gem` file to
+[rubygems.org](https://rubygems.org).
+
+## License
+
+Mozilla Public License, version 2.0. See the LICENSE file for details.
 
 ## Contributing
 
