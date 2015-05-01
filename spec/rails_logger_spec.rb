@@ -58,21 +58,26 @@ describe Rubinius::RailsLogger do
 
   describe "#fatal" do
     it { expect(logger.fatal "message").to be(nil) }
+    it { expect(logger.fatal { "message" }).to be(nil) }
   end
 
   describe "#error" do
     it { expect(logger.error "message").to be(nil) }
+    it { expect(logger.error { "message" }).to be(nil) }
   end
 
   describe "#warn" do
     it { expect(logger.warn "message").to be(nil) }
+    it { expect(logger.warn { "message" }).to be(nil) }
   end
 
   describe "#info" do
     it { expect(logger.info "message").to be(nil) }
+    it { expect(logger.info { "message" }).to be(nil) }
   end
 
   describe "#debug" do
     it { expect(logger.debug "message").to be(nil) }
+    it { expect(logger.debug { "message" }).to be(nil) }
   end
 end
