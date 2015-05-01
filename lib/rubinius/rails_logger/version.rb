@@ -1,5 +1,5 @@
 module Rubinius
-  module RailsLogger
+  class RailsLogger
     VERSION = "0.1.0"
   end
 end

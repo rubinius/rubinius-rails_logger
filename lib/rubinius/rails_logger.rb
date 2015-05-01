@@ -1,9 +1,33 @@
 require "rubinius/rails_logger/version"
 
 module Rubinius
-  module RailsLogger
+  class RailsLogger
+    # These operations are no-ops but provided for method-call compatibility.
+    attr_accessor :formatter, :level, :progname
+
     def initialize(name)
       @logger = Rubinius::Logger.new name
+      @level = :warn
+    end
+
+    def fatal?
+      false
+    end
+
+    def error?
+      false
+    end
+
+    def warn?
+      true
+    end
+
+    def info?
+      false
+    end
+
+    def debug?
+      false
     end
 
     def log(severity, message, &block)
