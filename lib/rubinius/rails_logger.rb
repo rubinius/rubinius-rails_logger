@@ -35,30 +35,30 @@ module Rubinius
       @logger.send severity, message
     end
 
-    def write(message, &block)
+    def write(message=nil, &block)
       message = yield if block_given?
       @logger.write message
     end
 
     alias_method :unknown, :write
 
-    def fatal(message, &block)
+    def fatal(message=nil, &block)
       log(:fatal, message, &block)
     end
 
-    def error(message, &block)
+    def error(message=nil, &block)
       log(:error, message, &block)
     end
 
-    def warn(message, &block)
+    def warn(message=nil, &block)
       log(:warn, message, &block)
     end
 
-    def info(message, &block)
+    def info(message=nil, &block)
       log(:info, message, &block)
     end
 
-    def debug(message, &block)
+    def debug(message=nil, &block)
       log(:debug, message, &block)
     end
   end
