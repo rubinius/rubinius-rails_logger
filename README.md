@@ -40,7 +40,38 @@ Set Rails to use the logger:
     # config/environments/production.rb
     config.logger = Rubinius::RailsLogger.new "app-name"
 
-Use the same logging API you would expect with, for example, SyslogLogger.
+Use the same logging API you would expect with, for example, SyslogLogger:
+
+    # assume logger is an instance of Rubinius::RailsLogger.
+
+    # RailsLogger#write outputs to the log independent of log level.
+    logger.write "some text"
+    logger.write { "some text" }
+
+    # Other methods only output if the related log level is set. All these
+    # methods can take a block instead of a message.
+    logger.fatal "some text"
+    logger.error "some text"
+    logger.warn "some text"
+    logger.info "some text
+    logger.debug "some text"
+
+    # Log level predicates are also available.
+    logger.fatal?   # => returns true if fatal messages are logged
+    logger.error?
+    logger.warn?
+    logger.info?
+    logger.debug?
+
+    # The following attributes are no-ops, but provided for compatibility. The
+    # log level is set at process invocation and cannot be changed. The program
+    # name is set when the logger is created.
+    logger.formatter
+    logger.formatter=
+    logger.level
+    logger.level=
+    logger.progname
+    logger.progname=
 
 ## Development
 
