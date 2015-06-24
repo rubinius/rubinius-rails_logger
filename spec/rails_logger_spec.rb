@@ -13,25 +13,25 @@ describe Rubinius::RailsLogger do
 
   describe "#add" do
     it 'logs program name if no messge is given' do
-      expect(logger).to receive(:log).with(:info, 'app-name')
-      logger.add(:info)
+      expect(logger).to receive(:log).with(1, 'app-name')
+      logger.add(1)
     end
 
     context 'message is sent' do
       let(:message) { 'this is a message' }
       it 'logs message argument if given' do
-        expect(logger).to receive(:log).with(:info, message)
-        logger.add(:info, message)
+        expect(logger).to receive(:log).with(1, message)
+        logger.add(1, message)
       end
 
       it 'logs message block if given' do
-        expect(logger).to receive(:log).with(:info, message)
-        logger.add(:info) { message }
+        expect(logger).to receive(:log).with(1, message)
+        logger.add(1) { message }
       end
 
       it 'logs message argument if both argument and block are passed' do
-        expect(logger).to receive(:log).with(:info, message)
-        logger.add(:info, message) { 'this is a block message' }
+        expect(logger).to receive(:log).with(1, message)
+        logger.add(1, message) { 'this is a block message' }
       end
     end
   end
@@ -74,7 +74,7 @@ describe Rubinius::RailsLogger do
   end
 
   describe "#progname" do
-    it { expect(logger.progname).to be(nil) }
+    it { expect(logger.progname).to eq('app-name') }
   end
 
   describe "#progname=" do
