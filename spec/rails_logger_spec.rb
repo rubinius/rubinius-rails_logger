@@ -11,6 +11,31 @@ end
 describe Rubinius::RailsLogger do
   let(:logger) { Rubinius::RailsLogger.new "app-name" }
 
+  describe "#add" do
+    it 'logs program name if no messge is given' do
+      expect(logger).to receive(:log).with(:info, 'app-name')
+      logger.add(:info)
+    end
+
+    context 'message is sent' do
+      let(:message) { 'this is a message' }
+      it 'logs message argument if given' do
+        expect(logger).to receive(:log).with(:info, message)
+        logger.add(:info, message)
+      end
+
+      it 'logs message block if given' do
+        expect(logger).to receive(:log).with(:info, message)
+        logger.add(:info) { message }
+      end
+
+      it 'logs message argument if both argument and block are passed' do
+        expect(logger).to receive(:log).with(:info, message)
+        logger.add(:info, message) { 'this is a block message' }
+      end
+    end
+  end
+
   # The predicates are hard-coded until Rubinius 2.5.4 or 2.6.0
   describe "#fatal?" do
     it { expect(logger.fatal?).to be(false) }
